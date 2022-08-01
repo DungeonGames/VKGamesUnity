@@ -8,9 +8,9 @@ using UnityEngine.Scripting;
 [assembly: AlwaysLinkAssembly]
 #endif
 
-namespace Agava.VKSDK
+namespace Agava.VKSdk
 {
-    public static class VKSDK
+    public static class VKSdk
     {
         [DllImport("__Internal")]
         private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback);

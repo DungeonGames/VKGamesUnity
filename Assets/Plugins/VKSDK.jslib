@@ -61,15 +61,6 @@ const library = {
                 console.log(error);
             });
         },
-        
-        vkWebAppShowOrderBox: function(type, item){
-            vkSDK.bridge.send("VKWebAppShowOrderBox", { 
-                type: UTF8ToString(type),
-                item: UTF8ToString(item)
-              })
-              .then(data => console.log(data.status))  
-              .catch(error => console.log(error));
-        }
     },
 
     // C# calls
@@ -88,11 +79,6 @@ const library = {
 
     ShowLeaderboardBox: function(playerScore, onErrorCallback){
         vkSDK.vkWebAppShowLeaderboardBox(playerScore, onErrorCallback);
-    },
-
-    ShowOrderBox: function(type, item)
-    {
-        vkSDK.vkWebAppShowOrderBox(type, item);
     },
 
     IsInitialized: function () {

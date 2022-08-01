@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Agava.VKSDK;
+using Agava.VKSdk;
 using UnityEngine.UI;
 
 public class PlaytestingCanvas : MonoBehaviour
@@ -12,12 +10,12 @@ public class PlaytestingCanvas : MonoBehaviour
 
     public void InitilizeSDKButton()
     {
-        VKSDK.Initialize(onSuccessCallback: OnSDKInitilized);
+        VKSdk.Initialize(onSuccessCallback: OnSDKInitilized);
     }
 
     private void OnSDKInitilized()
     {
-        Debug.Log(VKSDK.Initialized);
+        Debug.Log(VKSdk.Initialized);
     }
 
     public void ShowInterstitialButton()
@@ -40,10 +38,4 @@ public class PlaytestingCanvas : MonoBehaviour
     {
         Leaderboard.ShowLeaderboard(100);
     }
-
-    public void ShowIAPWindow()
-    {
-        InAppPurchases.Buy("item1", "item1");
-    }
-
 }

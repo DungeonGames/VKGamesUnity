@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using System;
 using AOT;
 
-namespace Agava.VKSDK
+namespace Agava.VKSdk
 {
     public static class Leaderboard
     {

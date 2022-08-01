@@ -2,7 +2,7 @@ using AOT;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Agava.VKSDK
+namespace Agava.VKSdk
 {
     public static class VideoAd
     {
