@@ -3,43 +3,63 @@ const library = {
     $vkSDK:{
 
         bridge : undefined,
-        adsReady: false,
+        isInitialized: false,
 
-        vkWebAppInit: function(){
+        vkWebAppInit: function(onInitializedCallback, onFailedCallback){
             const sdkScript = document.createElement('script');
             sdkScript.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
             document.head.appendChild(sdkScript);
 
             sdkScript.onload = function(){
                 window['vkBridge'].send("VKWebAppInit", {})
-                .then(data => console.log(data.result))
-                .catch(error => console.log(error));
-                vkSDK.bridge = window['vkBridge'];
+                    .then(function (data) {
+                        if (data.result) {
+                            dynCall('v', onInitializedCallback);
+                            vkSDK.bridge = window['vkBridge'];
+                            vkSDK.isInitialized = true;
+                        }
+                })
+                    .catch(function (error) {
+                        dynCall('v', onFailedCallback);
+                        console.log(error);
+                });
             }
            
         },
 
-        vkWebSAppShowRewardedAd: function(onVideoEnd){
+        vkWebSAppShowRewardedAd: function(onRewardedCallback, onErrorCallback){
             vkSDK.bridge.send("VKWebAppShowNativeAds", {ad_format:"reward"})
             .then(function(data){
                 if(data.result)
-                    dynCall('v', onVideoEnd);
+                    dynCall('v', onRewardedCallback);
             })
-            .catch(error => console.log(error));
+            .catch(function (error) {
+                dynCall('v', onErrorCallback);
+                console.log(error);
+            });
         },
 
-        vkWebAppShowInterstitialAd: function()
+        vkWebAppShowInterstitialAd: function(onOpenCallback, onErrorCallback)
         {
             vkSDK.bridge.send("VKWebAppShowNativeAds", {ad_format:"interstitial"})
-            .then(data => console.log(data.result))
-            .catch(error => console.log(error));
+            .then(function (data) {
+                if (data.result)
+                    dynCall('v', onOpenCallback);
+            })
+            .catch(function (error) {
+                dynCall('v', onErrorCallback);
+                console.log(error);
+            });
         },
 
-        vkWebAppShowLeaderboardBox: function(playerScore)
+        vkWebAppShowLeaderboardBox: function(playerScore, onErrorCallback)
         {
             vkSDK.bridge.send("VKWebAppShowLeaderBoardBox", {user_result:playerScore})
             .then(data => console.log(data.success))  
-            .catch(error => console.log(error));
+            .catch(function (error) {
+                dynCall('v', onErrorCallback);
+                console.log(error);
+            });
         },
         
         vkWebAppShowOrderBox: function(type, item){
@@ -54,26 +74,31 @@ const library = {
 
     // C# calls
 
-    WebAppInit: function(){
-        vkSDK.vkWebAppInit();
+    WebAppInit: function(onInitializedCallback, onErrorCallback){
+        vkSDK.vkWebAppInit(onInitializedCallback, onErrorCallback);
     },
 
-    ShowRewardedAds: function(onVideoEnd){
-        vkSDK.vkWebSAppShowRewardedAd(onVideoEnd);
+    ShowRewardedAds: function(onRewardedCallback, onErrorCallback){
+        vkSDK.vkWebSAppShowRewardedAd(onRewardedCallback, onErrorCallback);
     },
 
-    ShowInterstitialAds: function(){
-        vkSDK.vkWebAppShowInterstitialAd();
+    ShowInterstitialAds: function(onOpenCallback, onErrorCallback){
+        vkSDK.vkWebAppShowInterstitialAd(onOpenCallback, onErrorCallback);
     },
 
-    ShowLeaderboardBox: function(playerScore){
-        vkSDK.vkWebAppShowLeaderboardBox(playerScore);
+    ShowLeaderboardBox: function(playerScore, onErrorCallback){
+        vkSDK.vkWebAppShowLeaderboardBox(playerScore, onErrorCallback);
     },
 
     ShowOrderBox: function(type, item)
     {
         vkSDK.vkWebAppShowOrderBox(type, item);
+    },
+
+    IsInitialized: function () {
+        return vkSDK.isInitialized;
     }
+
     
 }
 

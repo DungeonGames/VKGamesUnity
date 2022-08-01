@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using AOT;
 using System;
-using UnityEngine;
+using AOT;
 using System.Runtime.InteropServices;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -11,44 +8,40 @@ using UnityEngine.Scripting;
 [assembly: AlwaysLinkAssembly]
 #endif
 
-public class VKSDK : MonoBehaviour
+namespace Agava.VKSDK
 {
-    [DllImport("__Internal")]
-    private static extern void WebAppInit();
-    [DllImport("__Internal")]
-    private static extern void ShowRewardedAds(Action onRewardedCallback);
-    [DllImport("__Internal")]
-    private static extern void ShowInterstitialAds();
-    [DllImport("__Internal")]
-    private static extern void ShowLeaderboardBox(int playerScore);
-    [DllImport("__Internal")]
-    private static extern void ShowOrderBox(string itemType, string itemName);
-
-
-    private void Start()
+    public static class VKSDK
     {
-        WebAppInit();
-    }
+        [DllImport("__Internal")]
+        private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback);
+        [DllImport("__Internal")]
+        private static extern bool IsInitialized();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-            ShowInterstitialAds();
+        public static bool Initialized => IsInitialized();
 
-        if (Input.GetKeyDown(KeyCode.R))
-            ShowRewardedAds(RewardedCallback);
+        private static Action s_onSuccessCallback;
+        private static Action s_onErrorCallback;
 
-        if (Input.GetKeyDown(KeyCode.L))
-            ShowLeaderboardBox(100);
+        public static void Initialize(Action onSuccessCallback = null, Action onErrorCallback = null)
+        {
+            s_onSuccessCallback = onSuccessCallback;
+            s_onErrorCallback = onErrorCallback;
 
-        if (Input.GetKeyDown(KeyCode.O))
-            ShowOrderBox("test_type", "test_item");
-    }
+            WebAppInit(OnSuccessCallback, OnErrorCallback);
+        }
 
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnSuccessCallback()
+        {
+            s_onSuccessCallback.Invoke();
+        }
 
-    [MonoPInvokeCallback(typeof(Action))]
-    private static void RewardedCallback()
-    {
-        Debug.Log("reward get!");
+        [MonoPInvokeCallback(typeof(Action))]
+        private static void OnErrorCallback()
+        {
+            s_onErrorCallback?.Invoke();
+        }
+
     }
 }
+
