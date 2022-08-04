@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.agava.vkgames": {
+      "version": "file:VKGames",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "7.0.6",
       "depth": 1,

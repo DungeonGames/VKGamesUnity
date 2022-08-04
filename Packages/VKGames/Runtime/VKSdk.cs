@@ -10,7 +10,7 @@ using UnityEngine.Scripting;
 
 namespace Agava.VKGames
 {
-    public static class VkGamesSdk
+    public static class VKSdk
     {
         [DllImport("__Internal")]
         private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback);
