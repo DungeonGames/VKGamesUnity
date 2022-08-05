@@ -1,16 +1,12 @@
 using System;
 using AOT;
 using System.Runtime.InteropServices;
+using System.Collections;
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-using UnityEngine.Scripting;
-
-[assembly: AlwaysLinkAssembly]
-#endif
 
 namespace Agava.VKGames
 {
-    public static class VKSdk
+    public static class VKGamesSdk
     {
         [DllImport("__Internal")]
         private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback);
@@ -22,12 +18,15 @@ namespace Agava.VKGames
         private static Action s_onSuccessCallback;
         private static Action s_onErrorCallback;
 
-        public static void Initialize(Action onSuccessCallback = null, Action onErrorCallback = null)
+        public static IEnumerator WaitForInitialization(Action onSuccessCallback = null, Action onErrorCallback = null)
         {
             s_onSuccessCallback = onSuccessCallback;
             s_onErrorCallback = onErrorCallback;
 
             WebAppInit(OnSuccessCallback, OnErrorCallback);
+
+            while (!Initialized)
+                yield return null;
         }
 
         [MonoPInvokeCallback(typeof(Action))]

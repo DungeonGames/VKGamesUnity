@@ -11,17 +11,23 @@ namespace VKGames.Tests
     {
 
         [UnityTest]
-        public IEnumerator ShouldInvokeErrorCallback()
+        public IEnumerator ShouldInitialize()
         {
+            if (VKGamesSdk.Initialized)
+            {
+                Assert.IsTrue(true);
+                yield break;
+            }
+
             bool callbackInvoked = false;
 
-            VKSdk.Initialize(onErrorCallback: () =>
+            yield return VKGamesSdk.WaitForInitialization(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
             });
 
 
-            yield return new WaitForSecondsRealtime(10);
+            yield return new WaitForSecondsRealtime(1);
 
             Assert.IsTrue(callbackInvoked);
         }

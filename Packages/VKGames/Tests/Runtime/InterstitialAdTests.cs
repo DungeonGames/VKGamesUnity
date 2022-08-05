@@ -9,9 +9,9 @@ namespace VKGames.Tests
     public class InterstitialAdTests
     {
         [UnitySetUp]
-public void Start()
+        public IEnumerator WaitForInitialization()
         {
-            VKSdk.Initialize();
+            yield return VKGamesSdk.WaitForInitialization();
         }
 
         [UnityTest]

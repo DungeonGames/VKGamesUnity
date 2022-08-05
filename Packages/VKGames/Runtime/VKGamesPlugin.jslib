@@ -14,9 +14,9 @@ const library = {
                 window['vkBridge'].send("VKWebAppInit", {})
                     .then(function (data) {
                         if (data.result) {
-                            dynCall('v', onInitializedCallback);
-                            vkSDK.bridge = window['vkBridge'];
                             vkSDK.isInitialized = true;
+                            vkSDK.bridge = window['vkBridge'];
+                            dynCall('v', onInitializedCallback);
                         }
                 })
                     .catch(function (error) {
