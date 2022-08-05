@@ -21,7 +21,7 @@ namespace VKGames.Tests
 
             bool callbackInvoked = false;
 
-            yield return VKGamesSdk.WaitForInitialization(onSuccessCallback: () =>
+            yield return VKGamesSdk.Initialize(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
             });

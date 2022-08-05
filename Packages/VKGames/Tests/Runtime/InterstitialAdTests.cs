@@ -11,7 +11,8 @@ namespace VKGames.Tests
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
         {
-            yield return VKGamesSdk.WaitForInitialization();
+            if (!VKGamesSdk.Initialized)
+                yield return VKGamesSdk.Initialize();
         }
 
         [UnityTest]

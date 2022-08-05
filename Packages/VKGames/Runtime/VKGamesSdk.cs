@@ -18,7 +18,7 @@ namespace Agava.VKGames
         private static Action s_onSuccessCallback;
         private static Action s_onErrorCallback;
 
-        public static IEnumerator WaitForInitialization(Action onSuccessCallback = null, Action onErrorCallback = null)
+        public static IEnumerator Initialize(Action onSuccessCallback = null, Action onErrorCallback = null)
         {
             s_onSuccessCallback = onSuccessCallback;
             s_onErrorCallback = onErrorCallback;
