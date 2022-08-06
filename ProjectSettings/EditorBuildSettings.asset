@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/EmptySceneForTestRunner.unity
     guid: e6219a78532de1a4eb2455d8776d3dcf
+  - enabled: 1
+    path: Packages/com.agava.vkgames/Samples/Playtesting/PlaytestingCanvas.unity
+    guid: 53f66251bf90a4c47b85e7610675ba76
   m_configObjects: {}

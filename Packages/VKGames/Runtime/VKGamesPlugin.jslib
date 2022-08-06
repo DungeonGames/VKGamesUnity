@@ -39,8 +39,7 @@ const library = {
             });
         },
 
-        vkWebAppShowInterstitialAd: function(onOpenCallback, onErrorCallback)
-        {
+        vkWebAppShowInterstitialAd: function(onOpenCallback, onErrorCallback)        {
             vkSDK.bridge.send("VKWebAppShowNativeAds", {ad_format:"interstitial"})
             .then(function (data) {
                 if (data.result)
@@ -55,7 +54,7 @@ const library = {
         vkWebAppShowLeaderboardBox: function(playerScore, onErrorCallback)
         {
             vkSDK.bridge.send("VKWebAppShowLeaderBoardBox", {user_result:playerScore})
-            .then(data => console.log(data.success))  
+            .then((data) => console.log(data.success))  
             .catch(function (error) {
                 dynCall('v', onErrorCallback);
                 console.log(error);
