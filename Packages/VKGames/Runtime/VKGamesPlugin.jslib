@@ -54,7 +54,9 @@ const library = {
         vkWebAppShowLeaderboardBox: function(playerScore, onErrorCallback)
         {
             vkSDK.bridge.send("VKWebAppShowLeaderBoardBox", {user_result:playerScore})
-            .then((data) => console.log(data.success))  
+            .then(function (data) {
+                console.log(data.success);
+            })
             .catch(function (error) {
                 dynCall('v', onErrorCallback);
                 console.log(error);
