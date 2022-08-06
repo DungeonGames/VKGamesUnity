@@ -1,6 +1,7 @@
 using UnityEngine;
 using Agava.VKGames;
 using UnityEngine.UI;
+using System.Collections;
 
 namespace Agava.VKGames.Samples
 {
@@ -10,9 +11,14 @@ namespace Agava.VKGames.Samples
 
         private int _coinsAmount = 0;
 
-        public void InitilizeSDKButton()
+        public void InitializeSdkButton()
         {
-            VKGamesSdk.Initialize(onSuccessCallback: OnSDKInitilized);
+            StartCoroutine(InitializeSDK());
+        }
+
+        private IEnumerator InitializeSDK()
+        {
+            yield return VKGamesSdk.Initialize(onSuccessCallback: OnSDKInitilized);
         }
 
         private void OnSDKInitilized()
