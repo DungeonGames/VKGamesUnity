@@ -23,12 +23,12 @@ const library = {
 
                 if (isTest) {
                     window['vkBridge'] = {
-                        send: function() {
-                            const sendPromise = new Promise();
-                            setTimeout(function () {
-                                sendPromise.reject(new Error('Error returned for testing purposes.'));
-                            }, 0);
-                            return sendPromise;
+                        send: function () {
+                            return new Promise(function (resolve, reject) {
+                                setTimeout(function () {
+                                    reject(new Error('Error returned for testing purposes.'));
+                                }, 0);
+                            });
                         }
                     };
                     invokeSuccess();
