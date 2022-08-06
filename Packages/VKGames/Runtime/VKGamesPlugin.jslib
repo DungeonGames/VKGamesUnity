@@ -1,53 +1,42 @@
 const library = {
-
     $vkSDK:{
-
         bridge : undefined,
+
         isInitialized: false,
 
-        vkWebAppInit: function(onInitializedCallback){
+        vkWebAppInit: function(onInitializedCallback, onErrorCallback, isTest){
             const sdkScript = document.createElement('script');
             sdkScript.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
             document.head.appendChild(sdkScript);
 
             sdkScript.onload = function(){
-                console.log('1');
-                dynCall('v', onInitializedCallback, []);
-                console.log('2');
-                // function invokeSuccess(callback) {
-                //     console.log('3');
-                //     vkSDK.isInitialized = true;
-                //     vkSDK.bridge = window['vkBridge'];
-                //     dynCall('v', callback, []);
-                //     console.log('4');
-                // }
+                function invokeSuccess() {
+                    vkSDK.isInitialized = true;
+                    vkSDK.bridge = window['vkBridge'];
+                    dynCall('v', onInitializedCallback);
+                }
 
-                // function invokeFailure(callback, error) {
-                //     console.log('5');
-                //     dynCall('v', callback);
-                //     console.error(error);
-                //     console.log('6');
-                // }
+                function invokeFailure(error) {
+                    dynCall('v', onErrorCallback);
+                    console.error(error);
+                }
 
-                // if (isTest) {
-                //     console.log('1');
-                //     invokeSuccess(onInitializedCallback);
-                //     console.log('999');
-                // } else {
-                //     window['vkBridge'].send("VKWebAppInit", {})
-                //     .then(function (data) {
-                //         if (data.result) {
-                //             invokeSuccess(onInitializedCallback);
-                //         } else {
-                //             invokeFailure(onFailedCallback, new Error('vkBridge failed to initialize.'));
-                //         }
-                //     })
-                //     .catch(function (error) {
-                //         invokeFailure(onFailedCallback, error);
-                //     });
-                // }
+                if (isTest) {
+                    invokeSuccess();
+                } else {
+                    window['vkBridge'].send("VKWebAppInit", {})
+                    .then(function (data) {
+                        if (data.result) {
+                            invokeSuccess();
+                        } else {
+                            invokeFailure(new Error('vkBridge failed to initialize.'));
+                        }
+                    })
+                    .catch(function (error) {
+                        invokeFailure(error);
+                    });
+                }
             }
-           
         },
 
         // vkWebSAppShowRewardedAd: function(onRewardedCallback, onErrorCallback){
@@ -89,8 +78,9 @@ const library = {
 
     // C# calls
 
-    WebAppInit: function(onInitializedCallback){
-        vkSDK.vkWebAppInit(onInitializedCallback);
+    WebAppInit: function(onInitializedCallback, onErrorCallback, isTest){
+        isTest = !!isTest;
+        vkSDK.vkWebAppInit(onInitializedCallback, onErrorCallback, isTest);
     },
 
     // ShowRewardedAds: function(onRewardedCallback, onErrorCallback){

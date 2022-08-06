@@ -22,8 +22,7 @@ namespace VKGames.Tests
             yield return VKGamesSdk.Initialize(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
-            });
-
+            }, isTest: true);
 
             yield return new WaitForSecondsRealtime(1);
 
