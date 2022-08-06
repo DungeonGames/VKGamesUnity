@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -24,7 +23,7 @@ namespace VKGames.Tests
             yield return VKGamesSdk.Initialize(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
-            });
+            }, isTest: true);
 
 
             yield return new WaitForSecondsRealtime(1);

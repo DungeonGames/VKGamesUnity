@@ -5,24 +5,38 @@ const library = {
         bridge : undefined,
         isInitialized: false,
 
-        vkWebAppInit: function(onInitializedCallback, onFailedCallback){
+        vkWebAppInit: function(onInitializedCallback, onFailedCallback, isTest){
             const sdkScript = document.createElement('script');
             sdkScript.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
             document.head.appendChild(sdkScript);
 
             sdkScript.onload = function(){
-                window['vkBridge'].send("VKWebAppInit", {})
+                function invokeSuccess() {
+                    vkSDK.isInitialized = true;
+                    vkSDK.bridge = window['vkBridge'];
+                    dynCall('v', onInitializedCallback);
+                }
+
+                function invokeFailure(error) {
+                    dynCall('v', onFailedCallback);
+                    console.error(error);
+                }
+
+                if (isTest) {
+                    invokeSuccess();
+                } else {
+                    window['vkBridge'].send("VKWebAppInit", {})
                     .then(function (data) {
                         if (data.result) {
-                            vkSDK.isInitialized = true;
-                            vkSDK.bridge = window['vkBridge'];
-                            dynCall('v', onInitializedCallback);
+                            invokeSuccess();
+                        } else {
+                            invokeFailure(new Error('vkBridge failed to initialize.'));
                         }
-                })
+                    })
                     .catch(function (error) {
-                        dynCall('v', onFailedCallback);
-                        console.log(error);
-                });
+                        invokeFailure(error);
+                    });
+                }
             }
            
         },
@@ -66,8 +80,9 @@ const library = {
 
     // C# calls
 
-    WebAppInit: function(onInitializedCallback, onErrorCallback){
-        vkSDK.vkWebAppInit(onInitializedCallback, onErrorCallback);
+    WebAppInit: function(onInitializedCallback, onErrorCallback, isTest){
+        isTest = !!isTest;
+        vkSDK.vkWebAppInit(onInitializedCallback, onErrorCallback, isTest);
     },
 
     ShowRewardedAds: function(onRewardedCallback, onErrorCallback){

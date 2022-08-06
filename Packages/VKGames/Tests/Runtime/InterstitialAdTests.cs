@@ -12,7 +12,7 @@ namespace VKGames.Tests
         public IEnumerator WaitForInitialization()
         {
             if (!VKGamesSdk.Initialized)
-                yield return VKGamesSdk.Initialize();
+                yield return VKGamesSdk.Initialize(isTest: true);
         }
 
         [UnityTest]
