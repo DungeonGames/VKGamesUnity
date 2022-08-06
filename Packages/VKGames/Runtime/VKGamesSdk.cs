@@ -9,7 +9,7 @@ namespace Agava.VKGames
     public static class VKGamesSdk
     {
         [DllImport("__Internal")]
-        private static extern void WebAppInit(Action onSuccessCallback, Action onErrorCallback, bool isTest);
+        private static extern void WebAppInit(Action onSuccessCallback);
         [DllImport("__Internal")]
         private static extern bool IsInitialized();
 
@@ -18,12 +18,11 @@ namespace Agava.VKGames
         private static Action s_onSuccessCallback;
         private static Action s_onErrorCallback;
 
-        public static IEnumerator Initialize(Action onSuccessCallback = null, Action onErrorCallback = null, bool isTest = false)
+        public static IEnumerator Initialize(Action onSuccessCallback = null)
         {
             s_onSuccessCallback = onSuccessCallback;
-            s_onErrorCallback = onErrorCallback;
 
-            WebAppInit(OnSuccessCallback, OnErrorCallback, isTest);
+            WebAppInit(OnSuccessCallback);
 
             while (!Initialized)
                 yield return null;
@@ -35,11 +34,11 @@ namespace Agava.VKGames
             s_onSuccessCallback.Invoke();
         }
 
-        [MonoPInvokeCallback(typeof(Action))]
-        private static void OnErrorCallback()
-        {
-            s_onErrorCallback?.Invoke();
-        }
+        //[MonoPInvokeCallback(typeof(Action))]
+        //private static void OnErrorCallback()
+        //{
+        //    s_onErrorCallback?.Invoke();
+        //}
 
     }
 }

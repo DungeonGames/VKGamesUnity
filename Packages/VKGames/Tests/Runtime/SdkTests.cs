@@ -8,13 +8,12 @@ namespace VKGames.Tests
 {
     public class SdkTests
     {
-
         [UnityTest]
         public IEnumerator ShouldInitialize()
         {
             if (VKGamesSdk.Initialized)
             {
-                Assert.IsTrue(true);
+                Assert.Pass();
                 yield break;
             }
 
@@ -23,7 +22,7 @@ namespace VKGames.Tests
             yield return VKGamesSdk.Initialize(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
-            }, isTest: true);
+            });
 
 
             yield return new WaitForSecondsRealtime(1);
