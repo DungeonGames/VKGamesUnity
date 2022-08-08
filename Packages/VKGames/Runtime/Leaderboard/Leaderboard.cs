@@ -11,9 +11,9 @@ namespace Agava.VKGames
 
         private static Action s_onErrorCallback;
 
-        public static void ShowLeaderboard(int playerScore = 0, Action errorCallback = null)
+        public static void ShowLeaderboard(int playerScore = 0, Action onErrorCallback = null)
         {
-            s_onErrorCallback = errorCallback;
+            s_onErrorCallback = onErrorCallback;
 
             ShowLeaderboardBox(playerScore, OnErrorCallback);
         }

@@ -33,7 +33,7 @@ namespace Agava.VKGames.Samples
 
         public void ShowRewardedAdsButton()
         {
-            VideoAd.Show(rewardedCallback: OnRewardedCallback);
+            VideoAd.Show(onRewardedCallback: OnRewardedCallback);
         }
 
         private void OnRewardedCallback()
