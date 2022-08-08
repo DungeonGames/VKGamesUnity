@@ -1,41 +1,51 @@
 using UnityEngine;
 using Agava.VKGames;
 using UnityEngine.UI;
+using System.Collections;
 
-public class PlaytestingCanvas : MonoBehaviour
+namespace Agava.VKGames.Samples
 {
-    [SerializeField] private Text _coinsAmountText;
-
-    private int _coinsAmount = 0;
-
-    public void InitilizeSDKButton()
+    public class PlaytestingCanvas : MonoBehaviour
     {
-        VKSdk.Initialize(onSuccessCallback: OnSDKInitilized);
-    }
+        [SerializeField] private Text _coinsAmountText;
 
-    private void OnSDKInitilized()
-    {
-        Debug.Log(VKSdk.Initialized);
-    }
+        private int _coinsAmount = 0;
 
-    public void ShowInterstitialButton()
-    {
-        Interstitial.Show();
-    }
+        public void InitializeSdkButton()
+        {
+            StartCoroutine(InitializeSDK());
+        }
 
-    public void ShowRewardedAdsButton()
-    {
-        VideoAd.Show(rewardedCallback: OnRewardedCallback);
-    }
+        private IEnumerator InitializeSDK()
+        {
+            yield return VKGamesSdk.Initialize(onSuccessCallback: OnSDKInitilized);
+        }
 
-    private void OnRewardedCallback()
-    {
-        _coinsAmount += 40;
-        _coinsAmountText.text = $"{_coinsAmount} coins";
-    }
+        private void OnSDKInitilized()
+        {
+            Debug.Log(VKGamesSdk.Initialized);
+        }
 
-    public void ShowLeaderboardButton()
-    {
-        Leaderboard.ShowLeaderboard(100);
+        public void ShowInterstitialButton()
+        {
+            Interstitial.Show();
+        }
+
+        public void ShowRewardedAdsButton()
+        {
+            VideoAd.Show(onRewardedCallback: OnRewardedCallback);
+        }
+
+        private void OnRewardedCallback()
+        {
+            _coinsAmount += 40;
+            _coinsAmountText.text = $"{_coinsAmount} coins";
+        }
+
+        public void ShowLeaderboardButton()
+        {
+            Leaderboard.ShowLeaderboard(100);
+        }
     }
 }
+

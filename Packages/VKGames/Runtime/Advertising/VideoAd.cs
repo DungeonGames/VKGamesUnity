@@ -12,10 +12,10 @@ namespace Agava.VKGames
         private static Action s_onRewardedCallback;
         private static Action s_onErrorCallback;
 
-        public static void Show(Action rewardedCallback = null, Action errorCallback = null)
+        public static void Show(Action onRewardedCallback = null, Action onErrorCallback = null)
         {
-            s_onRewardedCallback = rewardedCallback;
-            s_onErrorCallback = errorCallback;
+            s_onRewardedCallback = onRewardedCallback;
+            s_onErrorCallback = onErrorCallback;
 
             ShowRewardedAds(OnRewardedCallback, OnErrorCallback);
         }

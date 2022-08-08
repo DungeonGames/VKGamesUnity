@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -9,19 +8,23 @@ namespace VKGames.Tests
 {
     public class SdkTests
     {
-
         [UnityTest]
-        public IEnumerator ShouldInvokeErrorCallback()
+        public IEnumerator ShouldInitialize()
         {
+            if (VKGamesSdk.Initialized)
+            {
+                Assert.Pass();
+                yield break;
+            }
+
             bool callbackInvoked = false;
 
-            VKSdk.Initialize(onErrorCallback: () =>
+            yield return VKGamesSdk.Initialize(onSuccessCallback: () =>
             {
                 callbackInvoked = true;
-            });
+            }, isTest: true);
 
-
-            yield return new WaitForSecondsRealtime(10);
+            yield return new WaitForSecondsRealtime(1);
 
             Assert.IsTrue(callbackInvoked);
         }

@@ -1,12 +1,12 @@
-using System.Collections;
-using Agava.VKGames;
 using NUnit.Framework;
+using Agava.VKGames;
 using UnityEngine;
 using UnityEngine.TestTools;
+using System.Collections;
 
 namespace VKGames.Tests
 {
-    public class InterstitialAdTests
+    public class VideoAdTests
     {
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
@@ -19,7 +19,7 @@ namespace VKGames.Tests
         public IEnumerator ShowShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            Interstitial.Show(onErrorCallback: () =>
+            VideoAd.Show(onErrorCallback: () =>
             {
                 callbackInvoked = true;
             });
@@ -30,3 +30,4 @@ namespace VKGames.Tests
         }
     }
 }
+

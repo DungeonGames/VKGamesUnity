@@ -4,9 +4,10 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+
 namespace VKGames.Tests
 {
-    public class InterstitialAdTests
+    public class LeaderboardTests : MonoBehaviour
     {
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
@@ -19,7 +20,8 @@ namespace VKGames.Tests
         public IEnumerator ShowShouldInvokeErrorCallback()
         {
             bool callbackInvoked = false;
-            Interstitial.Show(onErrorCallback: () =>
+
+            Leaderboard.ShowLeaderboard(onErrorCallback: () =>
             {
                 callbackInvoked = true;
             });
@@ -30,3 +32,4 @@ namespace VKGames.Tests
         }
     }
 }
+
