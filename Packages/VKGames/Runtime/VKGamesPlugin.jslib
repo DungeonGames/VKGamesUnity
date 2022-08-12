@@ -5,6 +5,11 @@ const library = {
         isInitialized: false,
 
         vkWebAppInit: function (onInitializedCallback, onErrorCallback, isTest) {
+
+            if (vkSDK.isInitialized) {
+                return;
+            }
+                
             const sdkScript = document.createElement('script');
             sdkScript.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
             document.head.appendChild(sdkScript);
@@ -45,6 +50,12 @@ const library = {
                             invokeFailure(error);
                         });
                 }
+            }
+        },
+
+        throwIfSdkNotInitialized: function () {
+            if (!vkSDK.isInitialized) {
+                throw new Error('SDK is not initialized. Invoke VKGamesSdk.Initialize() coroutine and wait for it to finish.');
             }
         },
 
@@ -92,14 +103,20 @@ const library = {
     },
 
     ShowRewardedAds: function (onRewardedCallback, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+
         vkSDK.vkWebSAppShowRewardedAd(onRewardedCallback, onErrorCallback);
     },
 
     ShowInterstitialAds: function (onOpenCallback, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+
         vkSDK.vkWebAppShowInterstitialAd(onOpenCallback, onErrorCallback);
     },
 
     ShowLeaderboardBox: function (playerScore, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+
         vkSDK.vkWebAppShowLeaderboardBox(playerScore, onErrorCallback);
     },
 
