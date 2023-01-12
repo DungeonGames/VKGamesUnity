@@ -93,6 +93,31 @@ const library = {
                     console.log(error);
                 });
         },
+
+        vkWebAppShowInviteBox: function (onSuccessCallback, onErrorCallback) {
+            vkSDK.bridge.send("VKWebAppShowInviteBox", {})
+                .then(function (data) {
+                    if (data.success)
+                        dynCall('v', onSuccessCallback);
+                })
+                .catch(function (error) {
+                    dynCall('v', onErrorCallback);
+                    console.log(error);
+                });
+        },
+
+        vkWebJoinGroup: function (onSuccessCallback, onErrorCallback) {
+            vkSDK.bridge.send("VKWebAppJoinGroup", { "group_id": 217602721 })
+                .then(function (data) {
+                    if (data.result)
+                        dynCall('v', onSuccessCallback);
+                })
+                .catch(function (error) {
+                    dynCall('v', onErrorCallback);
+                    console.log(error);
+                });
+        },
+
     },
 
     // C# calls
@@ -118,6 +143,18 @@ const library = {
         vkSDK.throwIfSdkNotInitialized();
 
         vkSDK.vkWebAppShowLeaderboardBox(playerScore, onErrorCallback);
+    },
+
+    ShowInviteBox: function (onSuccessCallback, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+
+        vkSDK.vkWebAppShowInviteBox(onSuccessCallback, onErrorCallback);
+    },
+
+    JoinIjuniorGroup: function (onSuccessCallback, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+        
+        vkSDK.vkWebJoinGroup(onSuccessCallback, onErrorCallback);
     },
 
     IsInitialized: function () {

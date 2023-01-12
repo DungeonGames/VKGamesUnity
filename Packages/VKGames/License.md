@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Agava LLC (ООО "Агава", ИНН 7810929026)
+Copyright (c) 2022 DungeonGames
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
