@@ -1,10 +1,10 @@
 {
-    "name": "Agava.VKGames.Tests",
+    "name": "DungeonGames.VKGames.Tests",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Agava.VKGames"
+        "DungeonGames.VKGames"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -16,3 +16,9 @@
 ## [1.1.2]
 ### Changed
 - Replace VK Group ID to dungeon games group
+## [2.0.0]
+### Added
+- InAppPurchases.BuyItem()
+- DungeonGames Template
+### Changed
+- Rename Community.InviteToIJuniorGroup to Community.InviteToDungeonGamesGroup 

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="shortcut icon" href="favicon.ico"/>
+  <title>{{{ PRODUCT_NAME }}}</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      background-color: black;
+    }
+
+    #unity-canvas {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+    }
+
+    #unity-loading-bar {
+      position: absolute;
+      left: -30%;
+      top: 300px;
+      width: 160%;
+      height: 10px;
+      background-color: #f8e7bb;
+      border: 1px solid #6c6450;
+      border-radius: 10px;
+    }
+
+    #unity-progress-bar {
+      position: absolute;
+      left: -2px;
+      top: -2px;
+      width: 1%;
+      height: 14px;
+      background-color: #000;
+      border-radius: 10px;
+      transition: 400ms linear;
+    }
+    
+    #dungeon-logo {
+      background-image: url('logo.png');
+      position: absolute;
+      display: block;
+      width: 256px;
+      height: 256px;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);  
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="unity-canvas"></canvas>
+  <div id="dungeon-logo">
+    <div id="unity-loading-bar">
+      <div id="unity-progress-bar">
+      </div>
+    </div>
+  </div>
+  <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+  <script>
+    const maxPixelRatioMobile = 2.0;
+    const maxPixelRatioDesktop = 1.5;
+
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var maxDevicePixelRatio = isMobile? maxPixelRatioMobile: maxPixelRatioDesktop;
+    var pixelRatio = Math.min(window.devicePixelRatio, maxDevicePixelRatio);
+
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+    var config = {
+      dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+      frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+      codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#if MEMORY_FILENAME
+        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "{{{ COMPANY_NAME }}}",
+      productName: "{{{ PRODUCT_NAME }}}",
+      productVersion: "{{{ PRODUCT_VERSION }}}",
+      devicePixelRatio: pixelRatio
+    };
+
+    var canvas = document.querySelector("#unity-canvas");
+    var dungeonLogo = document.querySelector("#dungeon-logo");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBar = document.querySelector("#unity-progress-bar");
+
+    var myGameInstance = null;
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = function() {
+      createUnityInstance(canvas, config, function(progress) {
+        progressBar.style.width = 100 * progress + "%";
+      }).then(function(unityInstance) {
+        myGameInstance = unityInstance;
+        dungeonLogo.style.display = "none";
+      }).catch(function(message) {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+
+</html>

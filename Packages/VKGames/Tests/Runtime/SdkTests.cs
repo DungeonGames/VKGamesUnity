@@ -2,7 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Agava.VKGames;
+using DungeonGames.VKGames;
 
 namespace VKGames.Tests
 {

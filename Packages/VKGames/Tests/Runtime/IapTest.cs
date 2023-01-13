@@ -1,12 +1,12 @@
-using NUnit.Framework;
 using DungeonGames.VKGames;
-using UnityEngine;
-using UnityEngine.TestTools;
 using System.Collections;
+using UnityEngine.TestTools;
+using UnityEngine;
+using NUnit.Framework;
 
 namespace VKGames.Tests
 {
-    public class VideoAdTests
+    public class IapTest
     {
         [UnitySetUp]
         public IEnumerator WaitForInitialization()
@@ -16,10 +16,11 @@ namespace VKGames.Tests
         }
 
         [UnityTest]
-        public IEnumerator ShowShouldInvokeErrorCallback()
+        public IEnumerator ShowShouldInvokeErrorCallbackInviteFriends()
         {
             bool callbackInvoked = false;
-            VideoAd.Show(onErrorCallback: () =>
+
+            InAppPurchase.BuyItem(onErrorCallback: () =>
             {
                 callbackInvoked = true;
             });
@@ -30,4 +31,3 @@ namespace VKGames.Tests
         }
     }
 }
-

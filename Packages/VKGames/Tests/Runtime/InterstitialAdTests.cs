@@ -1,5 +1,5 @@
 using System.Collections;
-using Agava.VKGames;
+using DungeonGames.VKGames;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;

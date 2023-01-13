@@ -3,7 +3,7 @@ using AOT;
 using System.Runtime.InteropServices;
 using System.Collections;
 
-namespace Agava.VKGames
+namespace DungeonGames.VKGames
 {
     public static class VKGamesSdk
     {

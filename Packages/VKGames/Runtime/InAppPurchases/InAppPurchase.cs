@@ -4,20 +4,20 @@ using AOT;
 
 namespace DungeonGames.VKGames
 {
-    public static class Community
+    public static class InAppPurchase
     {
         [DllImport("__Internal")]
-        private static extern void JoinDungeonGamesGroup(Action onSuccessCallback, Action onErrorCallback);
+        private static extern void VKWebAppOpenPayForm(string itemName, Action onSuccessCallback, Action onErrorCallback);
 
         private static Action s_onRewardedCallback;
         private static Action s_onErrorCallback;
 
-        public static void InviteToDungeonGamesGroup(Action onRewardedCallback = null, Action onErrorCallback = null)
+        public static void BuyItem(string itemName = "", Action onRewardedCallback = null, Action onErrorCallback = null)
         {
             s_onRewardedCallback = onRewardedCallback;
             s_onErrorCallback = onErrorCallback;
 
-            JoinDungeonGamesGroup(OnSuccessCallback, OnErrorCallback);
+            VKWebAppOpenPayForm(itemName, OnSuccessCallback, OnErrorCallback);
         }
 
         [MonoPInvokeCallback(typeof(Action))]
@@ -31,6 +31,6 @@ namespace DungeonGames.VKGames
         {
             s_onErrorCallback?.Invoke();
         }
+
     }
 }
-

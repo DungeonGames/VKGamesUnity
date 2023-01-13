@@ -2,7 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using Agava.VKGames;
+using DungeonGames.VKGames;
 
 namespace VKGames.Tests
 {
@@ -20,7 +20,7 @@ namespace VKGames.Tests
         {
             bool callbackInvoked = false;
 
-            Community.InviteToIJuniorGroup(onErrorCallback: () =>
+            Community.InviteToDungeonGamesGroup(onErrorCallback: () =>
             {
                 callbackInvoked = true;
             });

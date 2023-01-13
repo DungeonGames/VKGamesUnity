@@ -1,4 +1,4 @@
-using Agava.VKGames;
+using DungeonGames.VKGames;
 using System.Collections;
 using UnityEngine.TestTools;
 using UnityEngine;
@@ -31,4 +31,3 @@ namespace VKGames.Tests
         }
     }
 }
-

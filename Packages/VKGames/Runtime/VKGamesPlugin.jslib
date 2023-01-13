@@ -118,6 +118,21 @@ const library = {
                 });
         },
 
+        vkWebAppOpenPayForm: function (itemName ,onSuccessCallback, onErrorCallback) {
+            vkSDK.bridge.send('VKWebAppShowOrderBox', {
+                type: 'item',
+                item: UTF8ToString(itemName)
+            })
+                .then((data) => {
+                    if (data.success) {
+                        dynCall('v', onSuccessCallback);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    dynCall('v', onErrorCallback);
+                });
+        }
     },
 
     // C# calls
@@ -151,7 +166,7 @@ const library = {
         vkSDK.vkWebAppShowInviteBox(onSuccessCallback, onErrorCallback);
     },
 
-    JoinIjuniorGroup: function (onSuccessCallback, onErrorCallback) {
+    JoinDungeonGamesGroup: function (onSuccessCallback, onErrorCallback) {
         vkSDK.throwIfSdkNotInitialized();
         
         vkSDK.vkWebJoinGroup(onSuccessCallback, onErrorCallback);
@@ -159,6 +174,12 @@ const library = {
 
     IsInitialized: function () {
         return vkSDK.isInitialized;
+    },
+
+    VKWebAppOpenPayForm: function (itemName, onSuccessCallback, onErrorCallback) {
+        vkSDK.throwIfSdkNotInitialized();
+
+        vkSDK.vkWebAppOpenPayForm(itemName, onSuccessCallback, onErrorCallback);
     }
 }
 
