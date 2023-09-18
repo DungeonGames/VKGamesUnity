@@ -61,5 +61,10 @@ namespace DungeonGames.VKGames.Samples
         {
             InAppPurchase.BuyItem("item_id_123456", OnRewardedCallback, onErrorCallback: () => Debug.Log("alalala"));
         }
+
+        public void ShowBannerAd()
+        {
+            BannerAd.Show();
+        }
     }
 }

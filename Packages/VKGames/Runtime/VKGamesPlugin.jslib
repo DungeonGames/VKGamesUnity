@@ -9,7 +9,7 @@ const library = {
             if (vkSDK.isInitialized) {
                 return;
             }
-                
+
             const sdkScript = document.createElement('script');
             sdkScript.src = 'https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js';
             document.head.appendChild(sdkScript);
@@ -118,7 +118,7 @@ const library = {
                 });
         },
 
-        vkWebAppOpenPayForm: function (itemName ,onSuccessCallback, onErrorCallback) {
+        vkWebAppOpenPayForm: function (itemName, onSuccessCallback, onErrorCallback) {
             vkSDK.bridge.send('VKWebAppShowOrderBox', {
                 type: 'item',
                 item: UTF8ToString(itemName)
@@ -132,7 +132,27 @@ const library = {
                     console.log(error);
                     dynCall('v', onErrorCallback);
                 });
+        },
+
+        vkShowBannerAd: function (onErrorCallback) {
+            vkSDK.bridge.send('VKWebAppShowBannerAd', {
+                banner_location: 'bottom',
+                can_close: false,
+                banner_location: 'resize'
+            })
+                .then((data) => {
+                    if (data.result) {
+                        // Баннерная реклама отобразилась
+                    }
+                })
+                .catch((error) => {
+                    // Ошибка
+                    console.log(error);
+                    dynCall('v', onErrorCallback);
+                });
+
         }
+
     },
 
     // C# calls
@@ -168,7 +188,7 @@ const library = {
 
     JoinDungeonGamesGroup: function (onSuccessCallback, onErrorCallback) {
         vkSDK.throwIfSdkNotInitialized();
-        
+
         vkSDK.vkWebJoinGroup(onSuccessCallback, onErrorCallback);
     },
 
@@ -180,6 +200,12 @@ const library = {
         vkSDK.throwIfSdkNotInitialized();
 
         vkSDK.vkWebAppOpenPayForm(itemName, onSuccessCallback, onErrorCallback);
+    },
+
+    ShowBannerAd: function(onErrorCallback){
+        vkSDK.throwIfSdkNotInitialized();
+
+        vkSDK.vkShowBannerAd(onErrorCallback);
     }
 }
 
