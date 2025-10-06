@@ -22,3 +22,9 @@
 - DungeonGames Template
 ### Changed
 - Rename Community.InviteToIJuniorGroup to Community.InviteToDungeonGamesGroup 
+## [2.1.0]
+### Added
+- BannerAd.Show();
+## [2.1.1]
+### Fixed
+- Failure to execute js library error

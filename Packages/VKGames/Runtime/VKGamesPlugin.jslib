@@ -1,4 +1,4 @@
-const library = {
+var vkLibrary = {
     $vkSDK: {
         bridge: undefined,
 
@@ -209,5 +209,5 @@ const library = {
     }
 }
 
-autoAddDeps(library, '$vkSDK');
-mergeInto(LibraryManager.library, library);
+autoAddDeps(vkLibrary, '$vkSDK');
+mergeInto(LibraryManager.library, vkLibrary);
